@@ -1,0 +1,68 @@
+lui $1, 0xffff
+lui $2, 0x8000
+lui $3, 0x7fff
+lui $4, 0x5a4b
+lui $5, 0x1e0f
+addi $6, $0, 0x0001
+ori $1, $1, 0xfffe
+ori $3, $3, 0xffff
+ori $4, $4, 0x3c2d
+ori $5, $5, 0xf0e1
+sub $7, $0, $6
+add $1, $1, $6
+ori $8, $2, 0x0800
+toggle:
+nor $9, $4, $5
+beq $4, $5, end
+srl $10, $2, 1
+srl $11, $2, 16
+sll $12, $8, 4
+sll $13, $8, 20
+subu $8, $8, $10
+dest:
+sltiu $24, $11, 0x7fff
+slt $9, $10, $12
+sltu $16, $10, $12
+slt $11, $13, $0
+sltu $17, $13, $0
+slti $14, $0, 0x0001
+slti $15, $13, 0x7fff
+sw $4, 0x0000($8)
+sw $5, 0x0004($8)
+sll $10, $10, 1
+srl $13, $13, 16
+bne $9, $14, dest
+addiu $11, $11, 0x0808
+addiu $8, $8, 0x0001
+jal part
+j toggle
+end:
+j end
+part:
+lw $18, -1($8)
+lw $19, 3($8)
+addu $9, $8, $1
+addu $11, $8, $11
+addiu $30, $31, 0x0024
+lhu $20, -1($8)
+lhu $21, 5($8)
+lbu $22, 4($9)
+lbu $23, 3($9)
+or $20, $20, $21
+or $21, $21, $19
+and $24, $19, $18
+andi $25, $19, 0x9f93
+sh $18, 8($9)
+sh $19, 12($9)
+addi $8, $8, 0x0004
+addi $9, $9, 0x0004
+slt $4, $20, $21
+slt $5, $22, $23
+sb $22, 12($9)
+sb $23, 13($9)
+sb $24, 14($9)
+sb $25, 15($9)
+beq $4, $5, back
+jr $30
+back:
+jr $31
