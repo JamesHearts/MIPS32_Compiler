@@ -1,4 +1,4 @@
-# MIPS32_Assembler
+# MIPS32_Compiler
 Introduction
 ------------
 
