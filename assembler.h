@@ -85,12 +85,8 @@ string dec2bin(int value)
 }
 
 /* Opens the file and reads it, creates a table of tokens (no spaces) */
-void openFile()
+void openFile(char *filename)
 {
-    char filename[400];
-
-    cout << "Enter filename (.txt extension is required)" << endl;
-    cin.getline(filename, 400);
     ifstream file;
     file.open(filename);
 
@@ -686,7 +682,7 @@ void printFile() //This function prints to file.
     oFile << "CONTENT BEGIN" << endl;
 
     int lineCounter = 0; //The line counter records the line address count.
-    int numberOfSymbols = symbols.size() -1; //This is the number of symbols we parsed from the assembly file.
+    int numberOfSymbols = symbols.size(); //This is the number of symbols we parsed from the assembly file.
     int symbolCounter = 0; //Whenever we iterate through the symbols vector we want to keep count as to not overflow.
     string instruction; //This string holds the final instruction in HEX for printing.
     int labelsCounter = 0; //We keep a count of the labels we find in the symbols vector.
